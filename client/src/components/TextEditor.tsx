@@ -86,6 +86,7 @@ export default function TextEditor() {
       <div 
         className="editor colored-text" 
         contentEditable 
+        suppressContentEditableWarning 
         ref={editorRef}
         onMouseUp={handleMouseUp}
         onKeyUp={handleMouseUp}
@@ -101,9 +102,7 @@ export default function TextEditor() {
           fontFamily: '"gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
           marginBottom: '10px'
         }}
-      >
-        Type here and select text to apply colors
-      </div>
+      />
       
       <div className="mt-2 mb-2 text-center" style={{
           color: '#b9bbbe',
