@@ -83,13 +83,35 @@ export default function TextEditor() {
         onSelectColor={(color) => setSelectedBgColor(color as ColorName | null)}
       />
       
-      <Box 
+      <div 
         className="editor colored-text" 
         contentEditable 
         ref={editorRef}
         onMouseUp={handleMouseUp}
         onKeyUp={handleMouseUp}
-      />
+        style={{ 
+          minHeight: '120px',
+          position: 'relative',
+          backgroundColor: '#36393f',
+          border: '1px solid #202225',
+          borderRadius: '3px',
+          padding: '10px',
+          color: '#dcddde',
+          fontSize: '14px',
+          fontFamily: '"gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
+          marginBottom: '10px'
+        }}
+      >
+        Type here and select text to apply colors
+      </div>
+      
+      <div className="mt-2 mb-2 text-center" style={{
+          color: '#b9bbbe',
+          fontSize: '12px',
+          fontFamily: '"gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
+        }}>
+        To color text: type something, select it, then click on a color from the options above
+      </div>
       
       <Flex justify="center" className="mt-4">
         <Button 
