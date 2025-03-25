@@ -44,6 +44,10 @@ A web-based tool that creates colored Discord messages using ANSI color codes av
    ```
    When prompted, select the `dist` folder as your publish directory.
 
+### Demo
+
+![Screenshot 2025-03-25 161553](https://github.com/user-attachments/assets/f20ed362-01de-4384-bfbb-6bdb16adeb8a)
+
 ### Important Notes for Netlify Deployment
 - The `netlify.toml` file in this repository contains all necessary configuration.
 - Single-page application routing is handled via redirects.
