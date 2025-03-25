@@ -21,7 +21,8 @@ export default function ColorButton({ color, type, selected, onClick, colorValue
         borderRadius: '4px',
         cursor: 'pointer',
         margin: '0 4px',
-        border: selected ? '2px solid white' : '1px solid rgba(255, 255, 255, 0.1)',
+        border: selected ? '2px solid #ffffff' : '1px solid #2c2f33',
+        boxShadow: selected ? '0 0 0 1px #23272A' : 'none',
         transition: 'transform 0.1s ease',
       }}
       data-color={color}

@@ -1,12 +1,13 @@
 export const COLORS = {
   red: '#f04747',
   orange: '#faa61a',
-  yellow: '#f1c40f',
-  green: '#2ecc71',
-  blue: '#3498db',
-  pink: '#e91e63',
+  yellow: '#f5dd42',
+  green: '#43b581',
+  blue: '#5865F2',
+  purple: '#9b59b6',
   white: '#ffffff',
-  default: '#95a5a6',
+  black: '#23272A',
+  default: '#747f8d',
 };
 
 export const COLOR_CODES = {
@@ -16,8 +17,9 @@ export const COLOR_CODES = {
     yellow: '33',
     green: '32',
     blue: '34',
-    pink: '35',
+    purple: '35',
     white: '37',
+    black: '30',
     default: '0',
   },
   bg: {
@@ -26,8 +28,9 @@ export const COLOR_CODES = {
     yellow: '43',
     green: '42',
     blue: '44',
-    pink: '45',
+    purple: '45',
     white: '47',
+    black: '40',
     default: '0',
   },
 };

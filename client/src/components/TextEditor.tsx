@@ -24,7 +24,7 @@ export default function TextEditor() {
   useEffect(() => {
     // Initialize the editor with sample text
     if (editorRef.current) {
-      editorRef.current.innerHTML = 'Welcome to <span style="color: #f04747;">Rebane\'s</span> <span style="color: #5865F2;">Discord</span> <span style="color: #2ecc71;">Colored</span> Text Generator!';
+      editorRef.current.innerHTML = 'Welcome to <span style="color: #f04747;">Rebane\'s</span> <span style="color: #5865F2;">Discord</span> <span style="color: #43b581;">Colored</span> Text Generator!';
     }
   }, []);
 
@@ -84,6 +84,12 @@ export default function TextEditor() {
         <Button 
           onClick={handleCopy}
           className="px-4 py-2"
+          sx={{
+            backgroundColor: '#5865F2',
+            '&:hover': {
+              backgroundColor: '#4752c4',
+            }
+          }}
         >
           {copyButtonText}
         </Button>
