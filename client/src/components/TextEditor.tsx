@@ -84,12 +84,17 @@ export default function TextEditor() {
         <Button 
           onClick={handleCopy}
           className="px-4 py-2"
-          sx={{
-            backgroundColor: '#5865F2',
-            '&:hover': {
-              backgroundColor: '#4752c4',
+          color="indigo"
+          styles={() => ({
+            root: {
+              backgroundColor: '#5865F2',
+              '&:hover': {
+                backgroundColor: '#4752c4'
+              },
+              borderRadius: '3px',
+              border: 'none'
             }
-          }}
+          })}
         >
           {copyButtonText}
         </Button>

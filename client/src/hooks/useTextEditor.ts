@@ -157,11 +157,13 @@ function getColorNameFromStyle(styleColor: string, type: 'fg' | 'bg'): ColorName
     const rgbMap: Record<string, ColorName> = {
       'rgb(240,71,71)': 'red',
       'rgb(250,166,26)': 'orange',
-      'rgb(241,196,15)': 'yellow',
-      'rgb(46,204,113)': 'green',
-      'rgb(52,152,219)': 'blue',
-      'rgb(233,30,99)': 'pink',
-      'rgb(255,255,255)': 'white'
+      'rgb(245,221,66)': 'yellow',
+      'rgb(67,181,129)': 'green',
+      'rgb(88,101,242)': 'blue',
+      'rgb(155,89,182)': 'purple',
+      'rgb(255,255,255)': 'white',
+      'rgb(35,39,42)': 'black',
+      'rgb(116,127,141)': 'default'
     };
     
     const normalizedRgb = `rgb(${rgb[1]},${rgb[2]},${rgb[3]})`;
