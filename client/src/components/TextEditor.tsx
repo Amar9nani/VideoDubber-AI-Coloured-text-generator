@@ -24,7 +24,7 @@ export default function TextEditor() {
   useEffect(() => {
     // Initialize the editor with sample text
     if (editorRef.current) {
-      editorRef.current.innerHTML = 'Welcome to <span style="color: #f04747;">Rebane\'s</span> <span style="color: #5865F2;">Discord</span> <span style="color: #43b581;">Colored</span> Text Generator!';
+      editorRef.current.innerHTML = 'Welcome to <span style="color: #f04747;">Rebane\'s</span> <span style="color: #5865F2;">Discord</span> <span style="color: #95d36e;">Colored</span> Text Generator!';
     }
   }, []);
 
@@ -50,7 +50,18 @@ export default function TextEditor() {
 
   return (
     <Box className="mb-6">
-      <Title order={2} className="font-bold text-xl mb-4 text-center">
+      <Title 
+        order={2} 
+        className="mb-4 text-center"
+        styles={() => ({
+          root: {
+            color: '#ffffff',
+            fontSize: '20px',
+            fontWeight: 600,
+            fontFamily: '"gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
+          }
+        })}
+      >
         Create your text
       </Title>
       
