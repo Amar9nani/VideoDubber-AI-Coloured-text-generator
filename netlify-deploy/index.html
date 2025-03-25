@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Colored Text Generator</title>
+  <style>
+    /* Discord-like styling */
+    body {
+      background-color: #36393f;
+      color: #dcddde;
+      font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1, h2 {
+      color: #ffffff;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .section {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+    
+    button {
+      background-color: #4f545c;
+      border: none;
+      color: #dcddde;
+      padding: 8px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    
+    button:hover {
+      background-color: #5d6269;
+    }
+    
+    .color-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 4px;
+      display: inline-block;
+      border: 2px solid transparent;
+    }
+    
+    .color-btn:hover, .color-btn.selected {
+      border: 2px solid white;
+    }
+    
+    .color-group {
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    .color-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .editor {
+      background-color: #36393f;
+      border: 1px solid #202225;
+      border-radius: 3px;
+      padding: 10px;
+      min-height: 120px;
+      margin-bottom: 10px;
+      color: #dcddde;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .copy-btn {
+      background-color: #5865F2;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 3px;
+    }
+    
+    .copy-btn:hover {
+      background-color: #4752c4;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #b9bbbe;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    a {
+      color: #5865F2;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Foreground colors */
+    .fg-darkGray { background-color: #7c7f82; }
+    .fg-red { background-color: #f04747; }
+    .fg-green { background-color: #95d36e; }
+    .fg-gold { background-color: #faa61a; }
+    .fg-blue { background-color: #38a1f2; }
+    .fg-pink { background-color: #ff73fa; }
+    .fg-teal { background-color: #26c6da; }
+    .fg-white { background-color: #ffffff; }
+    
+    /* Background colors */
+    .bg-bluishBlack { background-color: #2f3136; }
+    .bg-rustBrown { background-color: #8f5547; }
+    .bg-gray40 { background-color: #747f8d; }
+    .bg-gray45 { background-color: #828a97; }
+    .bg-gray55 { background-color: #9099a4; }
+    .bg-blurple { background-color: #5865f2; }
+    .bg-gray65 { background-color: #b8c0cc; }
+    .bg-creamWhite { background-color: #f2f3f5; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Discord Colored Text Generator</h1>
+    
+    <div class="section">
+      <h2>About</h2>
+      <div>
+        This is a simple app that creates colored Discord messages using the 
+        ANSI color codes available on the latest Discord desktop versions.
+      </div>
+      <div style="margin-top: 12px;">
+        To use this, write your text, select parts of it and assign colors to them,
+        then copy it using the button below, and send it in a Discord message.
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Create your text</h2>
+      
+      <div class="controls">
+        <button id="resetBtn">Reset</button>
+        <button id="boldBtn">Bold</button>
+        <button id="underlineBtn">Underline</button>
+      </div>
+      
+      <div class="color-group">
+        <span class="color-label">Foreground Colors:</span>
+        <div id="fgColors">
+          <div class="color-btn fg-darkGray" title="Dark Gray" data-color="darkGray" data-type="fg"></div>
+          <div class="color-btn fg-red" title="Red" data-color="red" data-type="fg"></div>
+          <div class="color-btn fg-green" title="Green" data-color="green" data-type="fg"></div>
+          <div class="color-btn fg-gold" title="Gold" data-color="gold" data-type="fg"></div>
+          <div class="color-btn fg-blue" title="Blue" data-color="blue" data-type="fg"></div>
+          <div class="color-btn fg-pink" title="Pink" data-color="pink" data-type="fg"></div>
+          <div class="color-btn fg-teal" title="Teal" data-color="teal" data-type="fg"></div>
+          <div class="color-btn fg-white" title="White" data-color="white" data-type="fg"></div>
+        </div>
+      </div>
+      
+      <div class="color-group">
+        <span class="color-label">Background Colors:</span>
+        <div id="bgColors">
+          <div class="color-btn bg-bluishBlack" title="Bluish Black" data-color="bluishBlack" data-type="bg"></div>
+          <div class="color-btn bg-rustBrown" title="Rust Brown" data-color="rustBrown" data-type="bg"></div>
+          <div class="color-btn bg-gray40" title="Gray 40%" data-color="gray40" data-type="bg"></div>
+          <div class="color-btn bg-gray45" title="Gray 45%" data-color="gray45" data-type="bg"></div>
+          <div class="color-btn bg-gray55" title="Gray 55%" data-color="gray55" data-type="bg"></div>
+          <div class="color-btn bg-blurple" title="Blurple" data-color="blurple" data-type="bg"></div>
+          <div class="color-btn bg-gray65" title="Gray 65%" data-color="gray65" data-type="bg"></div>
+          <div class="color-btn bg-creamWhite" title="Cream White" data-color="creamWhite" data-type="bg"></div>
+        </div>
+      </div>
+      
+      <div class="editor" id="editor" contenteditable="true">Welcome to <span style="color: #f04747;">Rebane's</span> <span style="color: #5865F2;">Discord</span> <span style="color: #95d36e;">Colored</span> Text Generator!</div>
+      
+      <div class="help-text">
+        To color text: type something, select it, then click on a color from the options above
+      </div>
+      
+      <button id="copyBtn" class="copy-btn">Copy text as Discord formatted</button>
+    </div>
+    
+    <div class="section">
+      <h2>Source Code</h2>
+      <div>
+        This app runs entirely in your browser and the source code is freely available on
+        <a href="https://gist.github.com/rebane2001/07f2d8e80df053c70a1576d27eabe97c" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>. Shout out to kkrypt0nn for
+        <a href="https://gist.github.com/kkrypt0nn/a02506f3712ff2d1c8ca7c9e0aed7c06" target="_blank" rel="noopener noreferrer">
+          this guide
+        </a>.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Color codes for ANSI formatting
+    const COLORS = {
+      // Foreground Colors
+      darkGray: '#7c7f82',
+      red: '#f04747',
+      green: '#95d36e',
+      gold: '#faa61a',
+      blue: '#38a1f2',
+      pink: '#ff73fa',
+      teal: '#26c6da',
+      white: '#ffffff',
+      
+      // Background Colors
+      bluishBlack: '#2f3136',
+      rustBrown: '#8f5547',
+      gray40: '#747f8d',
+      gray45: '#828a97',
+      gray55: '#9099a4',
+      blurple: '#5865f2',
+      gray65: '#b8c0cc',
+      creamWhite: '#f2f3f5',
+    };
+
+    const COLOR_CODES = {
+      fg: {
+        darkGray: '30',
+        red: '31',
+        green: '32',
+        gold: '33',
+        blue: '34',
+        pink: '35',
+        teal: '36',
+        white: '37',
+      },
+      bg: {
+        bluishBlack: '40',
+        rustBrown: '41',
+        gray40: '42',
+        gray45: '43',
+        gray55: '44',
+        blurple: '45',
+        gray65: '46',
+        creamWhite: '47',
+      },
+    };
+
+    // DOM elements
+    const editor = document.getElementById('editor');
+    const copyBtn = document.getElementById('copyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const boldBtn = document.getElementById('boldBtn');
+    const underlineBtn = document.getElementById('underlineBtn');
+    const colorBtns = document.querySelectorAll('.color-btn');
+    
+    // State
+    let selectedFgColor = null;
+    let selectedBgColor = null;
+    
+    // Initialize color buttons
+    colorBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        const color = btn.dataset.color;
+        
+        // Deselect other buttons of the same type
+        document.querySelectorAll(`.color-btn[data-type="${type}"].selected`).forEach(selected => {
+          selected.classList.remove('selected');
+        });
+        
+        // Toggle selection
+        if (type === 'fg' && selectedFgColor === color) {
+          selectedFgColor = null;
+        } else if (type === 'bg' && selectedBgColor === color) {
+          selectedBgColor = null;
+        } else {
+          btn.classList.add('selected');
+          if (type === 'fg') {
+            selectedFgColor = color;
+          } else {
+            selectedBgColor = color;
+          }
+        }
+        
+        // Apply formatting to selection if any
+        applyFormatting();
+      });
+    });
+
+    // Apply formatting to selected text
+    function applyFormatting() {
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0) return;
+      
+      const range = selection.getRangeAt(0);
+      if (range.collapsed) return;
+      
+      // Create a span with the selected color styling
+      const span = document.createElement('span');
+      
+      // Apply foreground color
+      if (selectedFgColor) {
+        span.style.color = COLORS[selectedFgColor];
+      }
+      
+      // Apply background color
+      if (selectedBgColor) {
+        span.style.backgroundColor = COLORS[selectedBgColor];
+      }
+      
+      // If no formatting to apply, don't wrap in span
+      if (span.style.length === 0) return;
+      
+      // Extract contents from range and wrap in the styled span
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
+      
+      // Clear selection
+      selection.removeAllRanges();
+    }
+
+    // Generate ANSI formatted text for Discord
+    function generateFormattedText() {
+      if (!editor) return '';
+      
+      let result = '```ansi\n';
+      
+      const walkNodes = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          return node.textContent || '';
+        }
+        
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          let content = '';
+          let prefix = '';
+          let suffix = '';
+          
+          const element = node;
+          
+          // Check for color styling
+          if (element.style.color) {
+            // Map the color to ANSI code
+            const colorName = getColorNameFromStyle(element.style.color, 'fg');
+            if (colorName) {
+              const code = COLOR_CODES.fg[colorName];
+              prefix += `\u001b[${code}m`;
+              suffix = `\u001b[0m${suffix}`;
+            }
+          }
+          
+          // Check for background color
+          if (element.style.backgroundColor) {
+            const bgColorName = getColorNameFromStyle(element.style.backgroundColor, 'bg');
+            if (bgColorName) {
+              const code = COLOR_CODES.bg[bgColorName];
+              prefix += `\u001b[${code}m`;
+              suffix = `\u001b[0m${suffix}`;
+            }
+          }
+          
+          // Check for bold
+          if (element.tagName === 'B' || element.tagName === 'STRONG' || 
+              window.getComputedStyle(element).fontWeight >= '700') {
+            prefix += '\u001b[1m';
+            suffix = '\u001b[22m' + suffix;
+          }
+          
+          // Check for underline
+          if (element.tagName === 'U' || 
+              window.getComputedStyle(element).textDecoration.includes('underline')) {
+            prefix += '\u001b[4m';
+            suffix = '\u001b[24m' + suffix;
+          }
+          
+          // Process child nodes
+          for (let i = 0; i < element.childNodes.length; i++) {
+            content += walkNodes(element.childNodes[i]);
+          }
+          
+          return prefix + content + suffix;
+        }
+        
+        return '';
+      };
+      
+      result += walkNodes(editor);
+      result += '\n```';
+      
+      return result;
+    }
+
+    // Helper function to map CSS color to our color names
+    function getColorNameFromStyle(styleColor, type) {
+      // Find closest match from our color palette
+      for (const [name, value] of Object.entries(COLORS)) {
+        // Simple comparison - in a real app, might need RGB conversion for more accurate matching
+        if (styleColor.toLowerCase() === value.toLowerCase() || 
+            styleColor.replace(/\s/g, '') === value.replace(/\s/g, '')) {
+          return name;
+        }
+      }
+      
+      // Handle RGB format
+      const rgb = styleColor.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
+      if (rgb) {
+        // Simple color mapping for Discord colors based on our palette
+        const rgbMap = {
+          // Foreground Colors
+          'rgb(124,127,130)': 'darkGray',   // dark gray - 33%
+          'rgb(240,71,71)': 'red',          // red
+          'rgb(149,211,110)': 'green',      // yellowish green
+          'rgb(250,166,26)': 'gold',        // gold
+          'rgb(56,161,242)': 'blue',        // light blue
+          'rgb(255,115,250)': 'pink',       // pink
+          'rgb(38,198,218)': 'teal',        // teal
+          'rgb(255,255,255)': 'white',      // white
+          
+          // Background Colors
+          'rgb(47,49,54)': 'bluishBlack',   // bluish black
+          'rgb(143,85,71)': 'rustBrown',    // rust brown
+          'rgb(116,127,141)': 'gray40',     // grey - 40%
+          'rgb(130,138,151)': 'gray45',     // grey - 45%
+          'rgb(144,153,164)': 'gray55',     // light grey - 55%
+          'rgb(88,101,242)': 'blurple',     // blurple
+          'rgb(184,192,204)': 'gray65',     // light grey - 65%
+          'rgb(242,243,245)': 'creamWhite'  // cream white
+        };
+        
+        const normalizedRgb = `rgb(${rgb[1]},${rgb[2]},${rgb[3]})`;
+        if (rgbMap[normalizedRgb]) {
+          return rgbMap[normalizedRgb];
+        }
+      }
+      
+      return null;
+    }
+    
+    // Button event handlers
+    editor.addEventListener('mouseup', applyFormatting);
+    editor.addEventListener('keyup', applyFormatting);
+    
+    resetBtn.addEventListener('click', () => {
+      editor.innerHTML = '';
+      selectedFgColor = null;
+      selectedBgColor = null;
+      document.querySelectorAll('.color-btn.selected').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+    });
+    
+    boldBtn.addEventListener('click', () => {
+      document.execCommand('bold', false);
+    });
+    
+    underlineBtn.addEventListener('click', () => {
+      document.execCommand('underline', false);
+    });
+    
+    copyBtn.addEventListener('click', async () => {
+      try {
+        const formattedText = generateFormattedText();
+        await navigator.clipboard.writeText(formattedText);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy text as Discord formatted';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        copyBtn.textContent = 'Failed to copy';
+        setTimeout(() => {
+          copyBtn.textContent = 'Copy text as Discord formatted';
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

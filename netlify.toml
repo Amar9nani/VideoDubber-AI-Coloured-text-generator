@@ -12,14 +12,20 @@
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
     X-Content-Type-Options = "nosniff"
     
-# For single page applications
+# Direct access to static version
+[[redirects]]
+  from = "/static"
+  to = "/static.html"
+  status = 200
+
+# Success page for Netlify deployments
+[[redirects]]
+  from = "/success"
+  to = "/success.html"
+  status = 200
+    
+# For single page applications (must be last)
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200
-  
-# Fallback to static version if React app doesn't load
-[[redirects]]
-  from = "/static"
-  to = "/static/index.html"
   status = 200
