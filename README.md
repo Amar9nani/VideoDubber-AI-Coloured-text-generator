@@ -49,9 +49,3 @@ A web-based tool that creates colored Discord messages using ANSI color codes av
 - Single-page application routing is handled via redirects.
 - A static fallback page is included to ensure the site works even if the React app fails to load.
 
-## Credits
-- Inspired by [Rebane's Discord Colored Text Generator](https://rebane2001.com/discord-colored-text-generator/)
-- Special thanks to [kkrypt0nn](https://gist.github.com/kkrypt0nn/a02506f3712ff2d1c8ca7c9e0aed7c06) for the ANSI color guide.
-
-## License
-MIT
