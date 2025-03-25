@@ -33,12 +33,12 @@ export default function useTextEditor() {
     const span = document.createElement('span');
     
     // Apply foreground color
-    if (selectedFgColor && selectedFgColor !== 'default') {
+    if (selectedFgColor) {
       span.style.color = COLORS[selectedFgColor];
     }
     
     // Apply background color
-    if (selectedBgColor && selectedBgColor !== 'default') {
+    if (selectedBgColor) {
       span.style.backgroundColor = COLORS[selectedBgColor];
     }
     
@@ -75,7 +75,8 @@ export default function useTextEditor() {
           // Map the color to ANSI code
           const colorName = getColorNameFromStyle(element.style.color, 'fg');
           if (colorName) {
-            prefix += `\u001b[${COLOR_CODES.fg[colorName]}m`;
+            const code = COLOR_CODES.fg[colorName as keyof typeof COLOR_CODES.fg];
+            prefix += `\u001b[${code}m`;
             suffix = `\u001b[0m${suffix}`;
           }
         }
@@ -84,7 +85,8 @@ export default function useTextEditor() {
         if (element.style.backgroundColor) {
           const bgColorName = getColorNameFromStyle(element.style.backgroundColor, 'bg');
           if (bgColorName) {
-            prefix += `\u001b[${COLOR_CODES.bg[bgColorName]}m`;
+            const code = COLOR_CODES.bg[bgColorName as keyof typeof COLOR_CODES.bg];
+            prefix += `\u001b[${code}m`;
             suffix = `\u001b[0m${suffix}`;
           }
         }
@@ -153,17 +155,27 @@ function getColorNameFromStyle(styleColor: string, type: 'fg' | 'bg'): ColorName
   // Handle RGB format
   const rgb = styleColor.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/i);
   if (rgb) {
-    // Simple color mapping for common Discord colors
-    const rgbMap: Record<string, ColorName> = {
-      'rgb(240,71,71)': 'red',
-      'rgb(250,166,26)': 'orange',
-      'rgb(245,221,66)': 'yellow',
-      'rgb(67,181,129)': 'green',
-      'rgb(88,101,242)': 'blue',
-      'rgb(155,89,182)': 'purple',
-      'rgb(255,255,255)': 'white',
-      'rgb(35,39,42)': 'black',
-      'rgb(116,127,141)': 'default'
+    // Simple color mapping for Discord colors based on our new palette
+    const rgbMap: {[key: string]: ColorName} = {
+      // Foreground Colors
+      'rgb(124,127,130)': 'darkGray',   // dark gray - 33%
+      'rgb(240,71,71)': 'red',          // red
+      'rgb(149,211,110)': 'green',      // yellowish green
+      'rgb(250,166,26)': 'gold',        // gold
+      'rgb(56,161,242)': 'blue',        // light blue
+      'rgb(255,115,250)': 'pink',       // pink
+      'rgb(38,198,218)': 'teal',        // teal
+      'rgb(255,255,255)': 'white',      // white
+      
+      // Background Colors
+      'rgb(47,49,54)': 'bluishBlack',   // bluish black
+      'rgb(143,85,71)': 'rustBrown',    // rust brown
+      'rgb(116,127,141)': 'gray40',     // grey - 40%
+      'rgb(130,138,151)': 'gray45',     // grey - 45%
+      'rgb(144,153,164)': 'gray55',     // light grey - 55%
+      'rgb(88,101,242)': 'blurple',     // blurple
+      'rgb(184,192,204)': 'gray65',     // light grey - 65%
+      'rgb(242,243,245)': 'creamWhite'  // cream white
     };
     
     const normalizedRgb = `rgb(${rgb[1]},${rgb[2]},${rgb[3]})`;
